@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AuthState, User, LoginCredentials, RegisterCredentials, ResetPasswordCredentials } from '@/types/auth';
 import { toast } from '@/hooks/use-toast';
@@ -13,7 +12,7 @@ interface AuthContextType extends AuthState {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const SERVER_PATH = process.env.REACT_APP_SERVER_PATH || 'http://localhost:3001';
+const SERVER_PATH = import.meta.env.VITE_SERVER_PATH || 'http://localhost:3001';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authState, setAuthState] = useState<AuthState>({

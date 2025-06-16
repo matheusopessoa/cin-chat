@@ -1,10 +1,9 @@
-
 import { useState, useCallback } from 'react';
 import { Chat, Message, CreateChatRequest, SendMessageRequest } from '@/types/chat';
 import { useAuth } from './useAuth';
 import { toast } from '@/hooks/use-toast';
 
-const SERVER_PATH = process.env.REACT_APP_SERVER_PATH || 'http://localhost:3001';
+const SERVER_PATH = import.meta.env.VITE_SERVER_PATH || 'http://localhost:3001';
 
 export const useChat = () => {
   const { token } = useAuth();
