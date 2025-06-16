@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AuthState, User, LoginCredentials, RegisterCredentials, ResetPasswordCredentials } from '@/types/auth';
 import { toast } from '@/hooks/use-toast';
@@ -42,6 +43,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = async (credentials: LoginCredentials): Promise<boolean> => {
+    // Verificação especial para usuário de teste
+    if (credentials.email === '1@1.com') {
+      const testUser: User = {
+        id: 'test-user',
+        email: '1@1.com',
+        name: 'Usuário de Teste'
+      };
+      
+      localStorage.setItem('token', 'test-token');
+      localStorage.setItem('user', JSON.stringify(testUser));
+      
+      setAuthState({
+        user: testUser,
+        token: 'test-token',
+        isAuthenticated: true,
+      });
+      
+      toast({
+        title: "Login de teste realizado!",
+        description: "Acesso liberado para usuário de teste.",
+      });
+      
+      return true;
+    }
+
     try {
       const response = await fetch(`${SERVER_PATH}/auth`, {
         method: 'POST',
